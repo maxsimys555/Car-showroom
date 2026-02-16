@@ -1,3 +1,5 @@
+import "./CommentList.css";
+
 function formatDate(value) {
   if (!value) return "Recently";
   const date = new Date(value);

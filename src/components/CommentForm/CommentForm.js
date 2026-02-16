@@ -1,4 +1,6 @@
 import { useState } from "react";
+import Select from "../Select/Select";
+import "./CommentForm.css";
 
 const MAX_NAME = 50;
 const MAX_TEXT = 300;
@@ -61,17 +63,21 @@ export default function CommentForm({ onSubmit }) {
         {errors.name && <span className="field-error">{errors.name}</span>}
       </label>
 
-      <label className="field">
-        <span>Rating</span>
-        <select value={rating} onChange={(event) => setRating(event.target.value)}>
-          <option value="5">5 - Excellent</option>
-          <option value="4">4 - Good</option>
-          <option value="3">3 - Average</option>
-          <option value="2">2 - Poor</option>
-          <option value="1">1 - Bad</option>
-        </select>
+      <div className="field">
+        <Select
+          label="Rating"
+          value={rating}
+          onChange={(next) => setRating(next)}
+          options={[
+            { value: "5", label: "5 - Excellent" },
+            { value: "4", label: "4 - Good" },
+            { value: "3", label: "3 - Average" },
+            { value: "2", label: "2 - Poor" },
+            { value: "1", label: "1 - Bad" },
+          ]}
+        />
         {errors.rating && <span className="field-error">{errors.rating}</span>}
-      </label>
+      </div>
 
       <label className="field">
         <span>Comment</span>

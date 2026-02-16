@@ -1,9 +1,10 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { fetchVehicleById } from "../api";
-import CommentForm from "../components/CommentForm";
-import CommentList from "../components/CommentList";
-import { loadComments, saveComment } from "../storage";
+import { fetchVehicleById } from "../../api";
+import CommentForm from "../../components/CommentForm/CommentForm";
+import CommentList from "../../components/CommentList/CommentList";
+import { loadComments, saveComment } from "../../storage";
+import "./VehiclePage.css";
 
 const priceFormatter = new Intl.NumberFormat("en-US", {
   style: "currency",
@@ -28,6 +29,7 @@ export default function VehiclePage() {
   const [error, setError] = useState("");
   const [localComments, setLocalComments] = useState([]);
   const [saveError, setSaveError] = useState("");
+  const [activeImage, setActiveImage] = useState("");
 
   useEffect(() => {
     let isMounted = true;
@@ -37,6 +39,9 @@ export default function VehiclePage() {
       .then((data) => {
         if (!isMounted) return;
         setVehicle(data);
+        if (data.thumbnail) {
+          setActiveImage(data.thumbnail);
+        }
         setStatus("success");
       })
       .catch((err) => {
@@ -96,6 +101,10 @@ export default function VehiclePage() {
 
   if (!vehicle) return null;
 
+  const images = Array.isArray(vehicle.images) ? vehicle.images : [];
+  const galleryImages = images.length ? images : [vehicle.thumbnail].filter(Boolean);
+  const currentImage = activeImage || vehicle.thumbnail;
+
   return (
     <section className="page vehicle-page">
       <Link className="link back-link" to="/">
@@ -104,11 +113,21 @@ export default function VehiclePage() {
 
       <section className="panel vehicle-hero">
         <div className="vehicle-hero-media">
-          <img src={vehicle.thumbnail} alt={vehicle.title} />
-          {Array.isArray(vehicle.images) && vehicle.images.length > 1 && (
-            <div className="vehicle-gallery">
-              {vehicle.images.slice(0, 4).map((image, index) => (
-                <img key={image} src={image} alt={`${vehicle.title} ${index + 1}`} />
+          <img src={currentImage} alt={vehicle.title} />
+          {galleryImages.length > 1 && (
+            <div className="vehicle-gallery" role="list">
+              {galleryImages.map((image, index) => (
+                <button
+                  key={image}
+                  type="button"
+                  className={`gallery-thumb ${
+                    image === currentImage ? "is-active" : ""
+                  }`}
+                  onClick={() => setActiveImage(image)}
+                  aria-label={`View ${vehicle.title} image ${index + 1}`}
+                >
+                  <img src={image} alt={`${vehicle.title} ${index + 1}`} />
+                </button>
               ))}
             </div>
           )}

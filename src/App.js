@@ -1,7 +1,7 @@
 import { Link, Route, Routes } from "react-router-dom";
 import "./App.css";
-import HomePage from "./pages/HomePage";
-import VehiclePage from "./pages/VehiclePage";
+import HomePage from "./pages/HomePage/HomePage";
+import VehiclePage from "./pages/VehiclePage/VehiclePage";
 
 function App() {
   return (
@@ -12,7 +12,7 @@ function App() {
             Car Showroom
           </Link>
           <p className="tagline">
-            Virtual showroom for exploring vehicles and sharing opinions.
+            Premium vehicle gallery with curated selections and client reviews.
           </p>
         </div>
       </header>
@@ -26,8 +26,7 @@ function App() {
 
       <footer className="site-footer">
         <div className="container footer-inner">
-          <span>DummyJSON Vehicles Showcase</span>
-          <span>Built with React + localStorage</span>
+          <span>Car Showroom</span>
         </div>
       </footer>
     </div>

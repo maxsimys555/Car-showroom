@@ -1,0 +1,6 @@
+.vehicle-grid {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  align-items: stretch;
+}

@@ -1,0 +1,109 @@
+.vehicle-page .panel {
+  margin-bottom: 24px;
+}
+
+.vehicle-hero {
+  display: grid;
+  gap: 24px;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}
+
+.vehicle-hero-media img {
+  border-radius: 18px;
+  width: 100%;
+  object-fit: cover;
+  box-shadow: 0 24px 60px rgba(8, 10, 14, 0.55);
+  filter: saturate(1.15) contrast(1.06);
+  transition: transform 0.6s ease, filter 0.6s ease;
+}
+
+.vehicle-hero-media {
+  position: relative;
+}
+
+
+
+.vehicle-gallery {
+  margin-top: 12px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+  gap: 8px;
+}
+
+.vehicle-gallery img {
+  border-radius: 12px;
+  height: 68px;
+  object-fit: cover;
+  filter: saturate(1.08) contrast(1.02);
+}
+
+.gallery-thumb {
+  border: 1px solid transparent;
+  border-radius: 14px;
+  padding: 0;
+  background: transparent;
+  cursor: pointer;
+  transition: border 0.2s ease, transform 0.2s ease;
+}
+
+.gallery-thumb img {
+  width: 100%;
+  display: block;
+}
+
+
+.gallery-thumb.is-active {
+  border-color: rgba(200, 166, 106, 0.8);
+}
+
+.vehicle-hero-info h1 {
+  margin: 0;
+  font-size: clamp(1.8rem, 2.8vw, 2.6rem);
+}
+
+.vehicle-hero-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: baseline;
+  flex-wrap: wrap;
+}
+
+.vehicle-specs {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 12px;
+  margin-top: 18px;
+  font-size: 0.9rem;
+}
+
+.spec-label {
+  color: var(--muted);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.back-link {
+  display: inline-block;
+  margin-bottom: 12px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(200, 166, 106, 0.5);
+  background: rgba(18, 24, 34, 0.6);
+  font-size: 0.9rem;
+  letter-spacing: 0.2px;
+  transition: background 0.2s ease, border 0.2s ease;
+}
+
+.back-link:hover {
+  background: rgba(200, 166, 106, 0.16);
+  border-color: rgba(200, 166, 106, 0.8);
+}
+
+@media (max-width: 640px) {
+  .vehicle-hero-top {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

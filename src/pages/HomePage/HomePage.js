@@ -1,13 +1,15 @@
 import { useEffect, useMemo, useState } from "react";
-import { fetchVehicles } from "../api";
-import SearchFilterForm from "../components/SearchFilterForm";
-import VehicleCard from "../components/VehicleCard";
+import { fetchVehicles } from "../../api";
+import SearchFilterForm from "../../components/SearchFilterForm/SearchFilterForm";
+import VehicleCard from "../../components/VehicleCard/VehicleCard";
+import "./HomePage.css";
 
 const initialFilters = {
   query: "",
   minPrice: "",
   maxPrice: "",
   minRating: "0",
+  sortBy: "rating-desc",
 };
 
 export default function HomePage() {
@@ -45,7 +47,7 @@ export default function HomePage() {
     const maxPrice = filters.maxPrice ? Number(filters.maxPrice) : null;
     const minRating = Number(filters.minRating || 0);
 
-    return vehicles.filter((vehicle) => {
+    const result = vehicles.filter((vehicle) => {
       const matchesQuery =
         !query ||
         vehicle.title.toLowerCase().includes(query) ||
@@ -55,6 +57,31 @@ export default function HomePage() {
       const matchesRating = vehicle.rating >= minRating;
       return matchesQuery && matchesMinPrice && matchesMaxPrice && matchesRating;
     });
+
+    const sorted = [...result];
+    switch (filters.sortBy) {
+      case "rating-asc":
+        sorted.sort((a, b) => a.rating - b.rating);
+        break;
+      case "price-asc":
+        sorted.sort((a, b) => a.price - b.price);
+        break;
+      case "price-desc":
+        sorted.sort((a, b) => b.price - a.price);
+        break;
+      case "title-asc":
+        sorted.sort((a, b) => a.title.localeCompare(b.title));
+        break;
+      case "title-desc":
+        sorted.sort((a, b) => b.title.localeCompare(a.title));
+        break;
+      case "rating-desc":
+      default:
+        sorted.sort((a, b) => b.rating - a.rating);
+        break;
+    }
+
+    return sorted;
   }, [vehicles, filters]);
 
   return (
@@ -64,6 +91,7 @@ export default function HomePage() {
         minPrice={filters.minPrice}
         maxPrice={filters.maxPrice}
         minRating={filters.minRating}
+        sortBy={filters.sortBy}
         onChange={updateFilters}
         totalCount={vehicles.length}
         visibleCount={filteredVehicles.length}

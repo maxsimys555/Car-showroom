@@ -1,0 +1,15 @@
+.comment-form {
+  display: grid;
+  gap: 16px;
+}
+
+.field-hint {
+  font-size: 0.75rem;
+  color: var(--muted);
+  text-align: right;
+}
+
+.field-error {
+  color: #b04433;
+  font-size: 0.8rem;
+}

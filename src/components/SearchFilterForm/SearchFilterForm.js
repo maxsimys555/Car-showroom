@@ -1,4 +1,6 @@
 import { useMemo } from "react";
+import Select from "../Select/Select";
+import "./SearchFilterForm.css";
 
 const PRICE_STEP = 100;
 
@@ -11,6 +13,7 @@ export default function SearchFilterForm({
   minPrice,
   maxPrice,
   minRating,
+  sortBy,
   onChange,
   totalCount,
   visibleCount,
@@ -62,18 +65,31 @@ export default function SearchFilterForm({
           />
         </label>
 
-        <label className="field">
-          <span>Min rating</span>
-          <select
-            value={minRating}
-            onChange={(event) => onChange({ minRating: event.target.value })}
-          >
-            <option value="0">Any</option>
-            <option value="3">3+</option>
-            <option value="4">4+</option>
-            <option value="4.5">4.5+</option>
-          </select>
-        </label>
+        <Select
+          label="Min rating"
+          value={minRating}
+          onChange={(next) => onChange({ minRating: next })}
+          options={[
+            { value: "0", label: "Any" },
+            { value: "3", label: "3+" },
+            { value: "4", label: "4+" },
+            { value: "4.5", label: "4.5+" },
+          ]}
+        />
+
+        <Select
+          label="Sort by"
+          value={sortBy}
+          onChange={(next) => onChange({ sortBy: next })}
+          options={[
+            { value: "rating-desc", label: "Rating: high to low" },
+            { value: "rating-asc", label: "Rating: low to high" },
+            { value: "price-asc", label: "Price: low to high" },
+            { value: "price-desc", label: "Price: high to low" },
+            { value: "title-asc", label: "Title: A-Z" },
+            { value: "title-desc", label: "Title: Z-A" },
+          ]}
+        />
       </form>
     </section>
   );
